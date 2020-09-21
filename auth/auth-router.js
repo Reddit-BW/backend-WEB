@@ -21,7 +21,7 @@ router.post("/register", (req, res) => {
     //now i am saving user to the database
     Users.add(credentials)
       .then((user) => {
-        res.status(201).json({ message: "user account successfully created" });
+        res.status(201).json({ credentials: user });
       })
       .catch((err) => {
         res.status(500).json({ message: err.message });
