@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   return knex.schema
     .createTable("users", (users) => {
-      users.increments().unsigned();
+      users.increments("user_id").unsigned();
       users.string("username", 255).notNullable().unique();
       users.string("password", 255).notNullable();
     })
@@ -13,7 +13,7 @@ exports.up = function (knex) {
         .integer("user_id")
         .unsigned()
         .notNullable()
-        .references("id")
+        .references("user_id")
         .inTable("users")
         .onDelete("CASCADE")
         .onUpdate("Cascade");

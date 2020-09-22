@@ -8,7 +8,7 @@ module.exports = {
 };
 
 function find() {
-  return db("users").select("id", "username").orderBy("id");
+  return db("users").select("user_id", "username").orderBy("user_id");
 }
 function findBy(filter) {
   return db("users").where(filter);
@@ -16,12 +16,12 @@ function findBy(filter) {
 
 async function add(user) {
   try {
-    const [id] = await db("users").insert(user, "id");
+    const [id] = await db("users").insert(user, "user_id");
     return findById(id);
   } catch (err) {
     throw err;
   }
 }
 function findById(id) {
-  return db("users").where({ id: id }).first();
+  return db("users").where({ user_id: id }).first();
 }
