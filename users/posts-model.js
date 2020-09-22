@@ -11,7 +11,7 @@ module.exports = {
 
 function find() {
   return db("user_posts")
-    .select("id", "title", "text")
+    .select("user_id", "title", "text")
     .orderBy("id")
     // .join("users")
     // .on("user_posts");

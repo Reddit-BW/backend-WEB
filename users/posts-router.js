@@ -62,18 +62,17 @@ router.put("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  db("users")
-    .where({ id })
+ Posts.findPostBy(id)
     .del()
-    .then((count) => {
-      if (count) {
-        res.json({ removed: count });
+    .then((post) => {
+      if (post) {
+        res.json({ removed: post[0] });
       } else {
-        res.status(404).json({ message: "Could not find user with given id" });
+        res.status(404).json({ message: "Could not find post with given id" });
       }
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to delete user" });
+      res.status(500).json({ message: err.message });
     });
 });
 
