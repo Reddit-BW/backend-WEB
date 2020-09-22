@@ -40,19 +40,19 @@ router.post("/login", (req, res) => {
   if (isValid(req.body)) {
     Users.findBy({ username: username })
       .then(([user]) => {
-        // if (user && bcryptjs.compareSync(password, user.password)) {
-        //   res.json({ message: "Welcome and enjoy these Dad jokes!" });
-        // } else {
-        //   res.status(401).json({ message: "invalid credentials" });
-        // }
+        if (user && bcryptjs.compareSync(password, user.password)) {
+          res.json({ message: "Welcome and enjoy these Dad jokes!" });
+        } else {
+          res.status(401).json({ message: "invalid credentials" });
+        }
 
         // compare the password the hash stored in the database
-        if (user && bcryptjs.compareSync(password, user.password)) {
-          const token = makeJwt(user);
-          res.status(200).json({ token });
-        } else {
-          res.status(401).json({ message: "Invalid credentials" });
-        }
+        // if (user && bcryptjs.compareSync(password, user.password)) {
+        //   const token = makeJwt(user);
+        //   res.status(200).json({ token });
+        // } else {
+        //   res.status(401).json({ message: "Invalid credentials" });
+        // }
       })
       .catch((error) => {
         res.status(500).json({ message: error.message });
