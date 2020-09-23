@@ -12,7 +12,7 @@ module.exports = {
     directory: "./migrations",
   },
   production: {
-    client: "postgresql",
+    client: "sqlite3",
     connection: {
       database: "my_db",
       user: "username",
