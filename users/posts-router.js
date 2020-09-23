@@ -31,7 +31,7 @@ router.post("/", (req, res) => {
 
   Posts.add(userData)
     .then((post) => {
-      console.log(post);
+     
       res.status(201).json({ data: post });
     })
     .catch((err) => {
