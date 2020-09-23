@@ -273,7 +273,7 @@ message saying user was removed
 ```
 
 <hr />
-## [DEL] Post by ID
+<h3>[DEL] Post by ID</h3>
 
 <a href="#top">Return to the top</a>
 
