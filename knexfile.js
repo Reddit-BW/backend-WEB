@@ -3,23 +3,38 @@
 module.exports = {
   development: {
     client: "sqlite3",
+    useNullAsDefault: true,
     connection: {
       filename: "./database/init.db3",
     },
-    useNullAsDefault: true,
-  },
-  migrations: {
-    directory: "./migrations",
-  },
-  production: {
-    client: "sqlite3",
-    connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      },
     },
     migrations: {
       directory: "./migrations",
+    },
+    seeds: {
+      directory: "./seeds",
+    },
+  },
+  production: {
+    client: "sqlite3",
+    useNullAsDefault: true,
+    connection: {
+      filename: "./database/shouts.db3",
+    },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      },
+    },
+    migrations: {
+      directory: "./migrations",
+    },
+    seeds: {
+      directory: ".seeds",
     },
   },
 };
