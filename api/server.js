@@ -1,5 +1,6 @@
 const express = require("express");
 const server = express();
+var cors = require("cors");
 const helmet = require("helmet");
 const usersRouter = require("../users/users-router");
 const postsRouter = require("../users/posts-router");
@@ -8,6 +9,7 @@ const authenticate = require("../auth/authenticate-middleware");
 
 server.use(helmet());
 server.use(express.json());
+server.use(cors());
 server.get("/", (req, res) => {
   res.status(200).json({ welcome: "to our API" });
 });
