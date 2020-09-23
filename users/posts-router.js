@@ -11,11 +11,10 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  Posts.findPostBy(id)
+  Posts.findById(id)
     .then((posts) => {
-      console.log(posts);
       if (posts) {
-        res.json(posts);
+        res.json({ data: posts });
       } else {
         res.status(404).json({ message: "Could not find post with given id." });
       }
@@ -25,14 +24,14 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/:id/", (req, res) => {
+router.post("/", (req, res) => {
   const { id } = req.params;
   const userData = req.body;
   userData.user_id = id;
 
   Posts.add(userData)
     .then((post) => {
-        console.log(post)
+      console.log(post);
       res.status(201).json({ data: post });
     })
     .catch((err) => {
@@ -44,29 +43,26 @@ router.put("/:id", (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  db("users")
-    .where({ id })
-    .update(changes)
-    .then((count) => {
-      if (count) {
-        res.json({ update: count });
+  Posts.update(id, changes)
+    .then((post) => {
+      if (post) {
+        res.json({ data: post });
       } else {
-        res.status(404).json({ message: "Could not find user with given id" });
+        res.status(404).json({ message: "Could not find post with given id" });
       }
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to update user" });
+      res.status(500).json({ message: "Failed to update post" });
     });
 });
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
 
- Posts.findPostBy(id)
-    .del()
+  Posts.remove(id)
     .then((post) => {
       if (post) {
-        res.json({ removed: post[0] });
+        res.json({ removed: post });
       } else {
         res.status(404).json({ message: "Could not find post with given id" });
       }

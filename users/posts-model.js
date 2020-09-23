@@ -6,21 +6,22 @@ module.exports = {
   findBy,
   findById,
   update,
-  findPostBy
+  findPostBy,
+  remove,
 };
 
 function find() {
   return db("user_posts")
-    .select("user_id", "title", "text")
-    .orderBy("id")
-    // .join("users")
-    // .on("user_posts");
+    .select("user_id", "title", "text", "id")
+    .orderBy("id");
+  // .join("users")
+  // .on("user_posts");
 }
-function findPostBy(userId){
-    return db("user_posts")
+function findPostBy(id) {
+  return db("user_posts")
     .join("users", "users.user_id", "user_posts.user_id")
-    .select("users.username", "user_posts.title", "user_posts.text")
-    .where("user_posts.user_id", userId)
+    .select("users.username", "user_posts.title", "user_posts.text", "id")
+    .where("user_posts.user_id", id);
 }
 function findBy(filter) {
   return db("user_posts").where(filter);
@@ -41,4 +42,8 @@ async function update(id, changes) {
   await db("user_posts").where({ id }).update(changes);
 
   return findById(id);
+}
+
+function remove(id) {
+  return db("user_posts").where({ id }).del();
 }
